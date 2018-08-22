@@ -1,0 +1,38 @@
+version: "2"
+
+services:
+  # Chat server.
+  rocketchat:
+    # https://hub.docker.com/_/rocket.chat/
+    image: rocketchat/rocket.chat:0.68.3
+    restart: always
+    links:
+      - rocketchat-mongodb:mongo
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - ROOT_URL=http://localhost:3000
+      - MONGO_URL=mongodb://rocketchat-mongodb:27017/rocketchat
+      - ADMIN_EMAIL=admin@example.com
+      - ADMIN_PASS=admin
+
+  rocketchat-mongodb:
+    # https://hub.docker.com/r/library/mongo/
+    image: mongo:3.3.9
+    restart: always
+    command: mongod --smallfiles --oplogSize 128
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./vol/rocketchat-mongodb/db:/data/db
+      - ./vol/rocketchat-mongodb/dump:/data/dump
+
+  rocketchat-mongodb-viewer:
+    # https://hub.docker.com/_/mongo-express/
+    image: mongo-express
+    restart: always
+    links:
+      - "rocketchat-mongodb:mongo"
+    ports:
+      - "27018:8081"

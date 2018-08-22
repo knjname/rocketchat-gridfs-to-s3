@@ -1,0 +1,9 @@
+// Save as `config.json`.
+{
+  "mongoUrl": "MongoDB URL (e.g. mongodb://localhost:27017/rocketchat)",
+  "region": "S3 region name (e.g. ap-northeast-1)",
+  "bucket": "S3 bucket name (e.g. rocketchat-uploads)",
+  "prefix": "S3 bucket prefix (e.g. aAaAAaA00AaaAa0AA/converted)",
+  "accessKeyId": "IAM accessKeyId that can access to S3. (read/write)",
+  "secretAccessKey": "IAM secretAccessKey"
+}
